@@ -196,7 +196,7 @@ namespace ConsoleDriver {
             }
             else {
                 ret += $"Closest distance: {lastResult}.\n";
-                ret += $"Solution number: {lastBestPairs.Count}. See them in {SolutionPath}\n";
+                ret += $"Solution count: {lastBestPairs.Count}. See them in {SolutionPath}\n";
                 ret += $"Solution example: {lastBestPairs[0].Item1} <=> {lastBestPairs[0].Item2}.\n";
                 WriteSolution(SolutionPath);
             }
