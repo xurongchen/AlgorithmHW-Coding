@@ -7,6 +7,7 @@ namespace Core {
         public abstract List<Tuple<Point, Point>> BestPairs { get; }
         public abstract string AlgorithmName { get; }
         public abstract double Solve(IEnumerable<Point> PointSet);
+        public override string ToString() => AlgorithmName;
     }
     
     public class ClosestPairOfPointsLinear: ClosestPairOfPoints {
