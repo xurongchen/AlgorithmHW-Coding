@@ -1,0 +1,9 @@
+#General 
+**/bin/
+**/obj/
+**/packages/
+**/.DS_Store
+
+#cpop
+cpop/PointSet.txt
+cpop/Solution.txt
