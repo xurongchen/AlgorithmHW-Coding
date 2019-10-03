@@ -35,6 +35,8 @@ namespace ConsoleDriver {
         private int _Timeout = 60000;
         public int Timeout => _Timeout;
 
+        private Thread ExecThread = null;
+
         public StreamWriter LogStreamWriter { get; }
         public StreamWriter SolutionStreamWriter { get; }
 
@@ -58,12 +60,11 @@ namespace ConsoleDriver {
         }
 
         public void Start() {
-            Thread threadToKill = null;
             LogStreamWriter.Write(ExperimentInfo);
             _StartTime = DateTime.Now;
             Action wrappedAction = () =>
             {
-                threadToKill = Thread.CurrentThread;
+                ExecThread = Thread.CurrentThread;
                 StartWithoutTimeout();
             };
             IAsyncResult result = wrappedAction.BeginInvoke(null, null);
@@ -72,14 +73,26 @@ namespace ConsoleDriver {
             }
             else
             {
-                threadToKill.Abort();
+                if (!ExecThread.IsAlive) return;
+                ExecThread.Abort();
+                LogStreamWriter.Write(TimeoutKill);
                 _Now = State.Error;
+                return;
             }
             LogStreamWriter.Write(ExperimentTimeInfo);
             SolutionStreamWriter.Write(SolutionInfo);
             LogStreamWriter.Write(ResultInfo);
         }
 
+        public void Abort() {
+            if(ExecThread != null && ExecThread.IsAlive) {
+                ExecThread.Abort();
+                LogStreamWriter.Write(ManuallyKill);
+            }
+            _Now = State.Init;
+        }
+
+        public void Reinitialize() => Abort();
         private void StartWithoutTimeout() {
             _TimeWatch = new Stopwatch();
             _TimeWatch.Start();
@@ -90,9 +103,9 @@ namespace ConsoleDriver {
         }
 
         public string ExperimentInfo => $"[INFO] Experiment started in {_StartTime}...\n" +
-                                          $"Algorithm name: {_Executor.Name}\n" + 
-                                          $"Point set size: {_Executor.Size}\n" + 
-                                          $"    Timeout   : {_Timeout / 1000}s.\n";
+                                        $"Algorithm name: {_Executor.Name}\n" + 
+                                        $"Point set size: {_Executor.Size}\n" + 
+                                        $"    Timeout   : {_Timeout / 1000}s.\n";
 
         public string ExperimentTimeInfo => _Now switch {
             State.Init => $"[INFO] Experiment had not started.\n",
@@ -111,6 +124,9 @@ namespace ConsoleDriver {
         };
         
         private string SolutionInfo => _Executor.Solution;
+        
+        private static string TimeoutKill =>  $"[INFO] Kill the running in {DateTime.Now}.(Timeout)\n";
+        private static string ManuallyKill => $"[INFO] Kill the running in {DateTime.Now}.(Manually)\n";
         
         private static string TimeoutLogicalError => $"[ERROR] The time should be in [1,86400]s.\n";
 
