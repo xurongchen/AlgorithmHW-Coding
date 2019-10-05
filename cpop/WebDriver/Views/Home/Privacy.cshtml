@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Result";
+}
+<h1>@ViewData["Title"]</h1>
+
+@section Head{
+    <script src="~/js/echarts-en.min.js"></script> @*Echart import*@
+}
+
+@if (ViewBag.Message != "") {
+    <p>@ViewBag.Message</p>
+}
+else {
+    <p>Closest distance: @ViewBag.Distance</p>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 1000px;height:600px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        // myChart.showLoading();
+        // 指定图表的配置项和数据
+        var option = {
+            xAxis: {
+                scale: true
+            },
+            yAxis: {
+                scale: true
+            },
+            series: [
+            {
+                type: 'effectScatter',
+                symbolSize: 15,
+                data: [
+                  @ViewBag.PointPairStr
+                ]
+            },
+            {
+                type: 'scatter',
+                symbolSize: 10,
+                data: [
+                    @ViewBag.DataListStr
+                ]
+            }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+</script>
+}

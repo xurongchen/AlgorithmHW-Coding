@@ -1,0 +1,82 @@
+﻿@using System.Collections
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Head{
+    <script src="~/js/echarts-en.min.js"></script> @*Echart import*@
+}
+
+<div class="text-center">
+    <h1 class="display-4">Closest pair of points</h1>
+</div>
+    <div class="row">
+        <div class="col-xl-4">
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">X</th>
+                  <th scope="col">Y</th>
+                  <th scope="col">Operation</th>
+                </tr>
+              </thead>
+              <tbody>
+              @{
+                  var index = 0;
+                  foreach (var point in ViewBag.PointSet) {
+                      <tr>
+                          <th scope="row">@(index+1)</th>
+                          <td>@point.x</td>
+                          <td>@point.y</td>
+                          <td><a href="/Home/DelPoint?id=@point.id">Delete</a></td>
+                      </tr>
+                      index++;
+                  }
+              }
+              <tr>
+                  <th scope="row">New</th>
+                  <form method="post" action="/Home/AddPoint">
+                      <td><input type="number" step="0.1" name="px" style="width: 60px"/></td>
+                      <td><input type="number" step="0.1" name="py" style="width: 60px"/></td>
+                      <td><input type="submit" value="Add" class="submit"/></td>
+                  </form>
+              </tr>
+              </tbody>
+              </table>
+        </div>
+
+    <div class="col-xl-6">
+      <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+      <div id="main" style="width: 600px;height:400px;"></div>
+      <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        // myChart.showLoading();
+        // 指定图表的配置项和数据
+        var option = {
+            xAxis: {
+                scale: true
+            },
+            yAxis: {
+                scale: true
+            },
+            series: [
+            {
+                type: 'effectScatter',
+                symbolSize: 10,
+                data: []
+            },{
+                type: 'scatter',
+                symbolSize: 10,
+                data: [
+                    @ViewBag.DataListStr
+                ]
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    </div>
+</div>

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 
 namespace ConsoleDriver {
@@ -59,31 +60,53 @@ namespace ConsoleDriver {
             _Now = State.Init;
         }
 
-        public void Start() {
+//        public void Start() {
+//            LogStreamWriter.Write(ExperimentInfo);
+//            _StartTime = DateTime.Now;
+//            Action wrappedAction = () =>
+//            {
+//                ExecThread = Thread.CurrentThread;
+//                StartWithoutTimeout();
+//            };
+//            IAsyncResult result = wrappedAction.BeginInvoke(null, null);
+//            
+//            if (result.AsyncWaitHandle.WaitOne(_Timeout)) {
+//                wrappedAction.EndInvoke(result);
+//            }
+//            else
+//            {
+//                if (!ExecThread.IsAlive) return;
+//                ExecThread.Abort();
+//                LogStreamWriter.Write(TimeoutKill);
+//                _Now = State.Error;
+//                return;
+//            }
+//            LogStreamWriter.Write(ExperimentTimeInfo);
+//            SolutionStreamWriter.Write(SolutionInfo);
+//            LogStreamWriter.Write(ResultInfo);
+//        }
+
+        public async void Start() {
             LogStreamWriter.Write(ExperimentInfo);
             _StartTime = DateTime.Now;
-            Action wrappedAction = () =>
-            {
-                ExecThread = Thread.CurrentThread;
-                StartWithoutTimeout();
-            };
-            IAsyncResult result = wrappedAction.BeginInvoke(null, null);
-            if (result.AsyncWaitHandle.WaitOne(_Timeout)) {
-                wrappedAction.EndInvoke(result);
-            }
-            else
-            {
-                if (!ExecThread.IsAlive) return;
-                ExecThread.Abort();
+            _Now = State.Running;
+            Task _Task;
+            _Task = Task.Run(StartWithoutTimeout);
+            var timeoutCancellationTokenSource = new CancellationTokenSource();
+            if (await Task.WhenAny(_Task, Task.Delay(_Timeout, timeoutCancellationTokenSource.Token)) == _Task) {
+                // task completed within timeout
+                timeoutCancellationTokenSource.Cancel();
+                _Now = State.Finished;
+                LogStreamWriter.Write(ExperimentTimeInfo);
+                SolutionStreamWriter.Write(SolutionInfo);
+                LogStreamWriter.Write(ResultInfo);
+                await _Task;
+            } else { 
+                // timeout logic
                 LogStreamWriter.Write(TimeoutKill);
                 _Now = State.Error;
-                return;
             }
-            LogStreamWriter.Write(ExperimentTimeInfo);
-            SolutionStreamWriter.Write(SolutionInfo);
-            LogStreamWriter.Write(ResultInfo);
         }
-
         public void Abort() {
             if(ExecThread != null && ExecThread.IsAlive) {
                 ExecThread.Abort();
@@ -91,6 +114,8 @@ namespace ConsoleDriver {
             }
             _Now = State.Init;
         }
+        
+        
 
         public void Reinitialize() => Abort();
         private void StartWithoutTimeout() {

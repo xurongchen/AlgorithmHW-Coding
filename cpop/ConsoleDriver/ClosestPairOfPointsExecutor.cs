@@ -30,7 +30,7 @@ namespace ConsoleDriver {
               $"[RESULT] Solution count: {BestPairs.Count}.\n" +
               $"[RESULT] One solution: {BestPairs[0].Item1} <=> {BestPairs[0].Item2}.\n";
 
-        public string Solution => String.Join('\n', BestPairs.Select(x => $"{x.Item1} <=> {x.Item2}")) + "\n";
+        public string Solution => String.Concat(BestPairs.Select(x => $"{x.Item1} <=> {x.Item2}\n"));
         public void Execute() {
             _Distance = _Algorithm.Solve(_PointSet);
         }
