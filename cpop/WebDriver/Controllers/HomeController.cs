@@ -49,7 +49,7 @@ namespace WebDriver.Controllers {
             return RedirectToAction("Index");
         }
         
-        public IActionResult Privacy() {
+        public IActionResult Result() {
             ViewBag.Message = "";
             if (_experiment != null) {
                 ViewBag.Message += _experiment.Now switch {
@@ -75,7 +75,7 @@ namespace WebDriver.Controllers {
                         new ClosestPairOfPointsExecutor(new ClosestPairOfPointsLinear(), _pointSet)
                         );
                     _experiment.Start();
-                    return RedirectToAction("Privacy");
+                    return RedirectToAction("Result");
                 }
             }
             return View();
