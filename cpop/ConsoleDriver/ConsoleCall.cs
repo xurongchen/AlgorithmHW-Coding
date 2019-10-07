@@ -125,7 +125,7 @@ namespace ConsoleDriver {
             if (PointSet == null) return false;
             var executor = naive
                 ? (ClosestPairOfPoints) new Core.ClosestPairOfPointsNaive()
-                : new Core.ClosestPairOfPointsLinear();
+                : new Core.ClosestPairOfPointsEfficient();
             lastResult = executor.Solve(PointSet);
             lastBestPairs = executor.BestPairs;
             AlgorithmName = executor.AlgorithmName;

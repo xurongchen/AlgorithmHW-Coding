@@ -87,9 +87,9 @@ namespace ConsoleDriver {
 //        }
 
         public async void Start() {
-            LogStreamWriter.Write(ExperimentInfo);
             _StartTime = DateTime.Now;
             _Now = State.Running;
+            LogStreamWriter.Write(ExperimentInfo);
             Task _Task;
             _Task = Task.Run(StartWithoutTimeout);
             var timeoutCancellationTokenSource = new CancellationTokenSource();

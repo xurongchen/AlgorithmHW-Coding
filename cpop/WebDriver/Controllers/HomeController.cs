@@ -72,7 +72,7 @@ namespace WebDriver.Controllers {
                 if (_pointSet.Count < 2) ViewBag.Message += $"Points less than 2!\n";
                 else {
                     _experiment = new Experiment(
-                        new ClosestPairOfPointsExecutor(new ClosestPairOfPointsLinear(), _pointSet)
+                        new ClosestPairOfPointsExecutor(new ClosestPairOfPointsEfficient(), _pointSet)
                         );
                     _experiment.Start();
                     return RedirectToAction("Result");

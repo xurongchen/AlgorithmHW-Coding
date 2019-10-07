@@ -10,11 +10,11 @@ namespace Core {
         public override string ToString() => AlgorithmName;
     }
     
-    public class ClosestPairOfPointsLinear: ClosestPairOfPoints {
+    public class ClosestPairOfPointsEfficient: ClosestPairOfPoints {
         private readonly List<Tuple<Point, Point>> _BestPairs = new List<Tuple<Point, Point>>(); // Maybe more than one solution
         private HashSet<Tuple<Point, Point>> _MeetPair = new HashSet<Tuple<Point, Point>>();
         public override List<Tuple<Point, Point>> BestPairs => _BestPairs;
-        public override string AlgorithmName => "Linear time closest pair of points";
+        public override string AlgorithmName => "Efficient closest pair of points";
 
         public override double Solve(IEnumerable<Point> PointSet) {
             _BestPairs.Clear();
