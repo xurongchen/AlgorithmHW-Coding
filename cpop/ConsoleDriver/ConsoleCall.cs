@@ -81,7 +81,7 @@ namespace ConsoleDriver {
                         PointSet = Core.Point.RandomPoints(LowerBound, UpperBound, pointSize).ToList();
                         Console.Write(PointSetInformation());
                         break;
-                    case 3: // Execute linear time algorithm
+                    case 3: // Execute Efficient algorithm
                         stopwatch = new System.Diagnostics.Stopwatch();
                         stopwatch.Start();
                         if (!RunClosestPairOfPoints()) {
@@ -154,7 +154,7 @@ namespace ConsoleDriver {
                                                        $"[0] Print logs\n" +
                                                        $"[1] Set bounds\n" +
                                                        $"[2] Random a point set\n" +
-                                                       $"[3] Execute linear time algorithm\n" +
+                                                       $"[3] Execute efficient algorithm\n" +
                                                        $"[4] Execute naive algorithm\n" +
                                                        $"[8] About\n" +
                                                        $"[9] Exit\n";
