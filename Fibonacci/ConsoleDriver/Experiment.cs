@@ -71,7 +71,8 @@ namespace ConsoleDriver {
                 timeoutCancellationTokenSource.Cancel();
                 _Now = State.Finished;
                 LogStreamWriter.Write(ExperimentTimeInfo);
-                SolutionStreamWriter.Write(SolutionInfo);
+                if(SolutionStreamWriter != StreamWriter.Null)
+                    SolutionStreamWriter.Write(SolutionInfo);
                 LogStreamWriter.Write(ResultInfo);
                 await _Task;
             } else { 
@@ -109,7 +110,7 @@ namespace ConsoleDriver {
             State.Init => $"[INFO] Experiment had not started.\n",
             State.Running => $"[INFO] Experiment is still running.\n",
             State.Error => $"[INFO] Timeout with bound {_Timeout / 1000}s.\n",
-            State.Finished => $"[INFO] Experiment finished in {_TimeWatch.Elapsed}.",
+            State.Finished => $"[INFO] Experiment finished in {_TimeWatch.Elapsed}.\n",
             _ => throw new NotSupportedException($"State {_Now} not supported.")
         };
 

@@ -8,7 +8,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="ComparativeExperiment.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
+          <e p="Release" t="Include">
             <e p="netcoreapp3.0" t="Include">
               <e p="ComparativeExperiment.AssemblyInfo.cs" t="Include" />
             </e>
@@ -23,7 +23,7 @@
         <e p="Experiment.cs" t="Include" />
         <e p="FibonacciExecutor.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
+          <e p="Release" t="Include">
             <e p="netcoreapp3.0" t="Include">
               <e p="ConsoleDriver.AssemblyInfo.cs" t="Include" />
             </e>
@@ -36,7 +36,7 @@
         <e p="Core.csproj" t="IncludeRecursive" />
         <e p="Fibonacci.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
+          <e p="Release" t="Include">
             <e p="netcoreapp3.0" t="Include">
               <e p="Core.AssemblyInfo.cs" t="Include" />
             </e>

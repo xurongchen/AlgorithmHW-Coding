@@ -13,7 +13,7 @@ namespace ConsoleDriver {
             BigInteger num;
             if (BigInteger.TryParse(numStr,out num)) {
                 var experimentE =
-                    new Experiment(new FibonacciExecutor(new Core.FibonacciEfficient(), num),logStreamWriter: sw);
+                    new Experiment(new FibonacciExecutor(new Core.FibonacciEfficient(), num),logStreamWriter: new StreamWriter(Console.OpenStandardOutput()),new StreamWriter(Console.OpenStandardOutput()));
                 experimentE.Start();
                 while(experimentE.Now == Experiment.State.Running) Thread.Sleep(500);
                 return;

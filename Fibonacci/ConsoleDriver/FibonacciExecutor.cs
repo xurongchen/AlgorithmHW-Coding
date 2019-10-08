@@ -10,8 +10,8 @@ namespace ConsoleDriver {
 
         private BigInteger _N;
         public BigInteger Size => _N;
-        public string Result => $"[RESULT] The No:{_N} Fibonacci number is: {_Value}.\n";
-        public string Solution => $"{_Value.ToString()}\n";
+        public string Result => $"[RESULT] The No:{_N} Fibonacci number solved.\n";
+        public string Solution => $"The No:{_N} Fibonacci number :{_Value.ToString()}\n";
         public void Execute() {
             _Value = _Algorithm.Solve(_N);
         }

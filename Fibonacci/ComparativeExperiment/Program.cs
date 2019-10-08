@@ -14,16 +14,21 @@ namespace ComparativeExperiment {
         static void Main(string[] args) {
             var Scales = new List<BigInteger>() {
                 BigInteger.Parse("1"),
+                BigInteger.Parse("5"),
                 BigInteger.Parse("10"),
+                BigInteger.Parse("50"),
                 BigInteger.Parse("100"),
+                BigInteger.Parse("500"),
                 BigInteger.Parse("1000"),
+                BigInteger.Parse("5000"),
                 BigInteger.Parse("10000"),
+                BigInteger.Parse("50000"),
                 BigInteger.Parse("100000"),
+                BigInteger.Parse("500000"),
                 BigInteger.Parse("1000000"),
+                BigInteger.Parse("5000000"),
                 BigInteger.Parse("10000000"),
-                BigInteger.Parse("100000000"),
-                BigInteger.Parse("1000000000"),
-                BigInteger.Parse("10000000000")
+                BigInteger.Parse("50000000")
             };
             var sw = new StreamWriter(Console.OpenStandardOutput()) {AutoFlush = true};
             Console.SetOut(sw);
@@ -34,8 +39,7 @@ namespace ComparativeExperiment {
 
                     Console.WriteLine($"Efficient algorithm");
                     var experimentE =
-                        new Experiment(new FibonacciExecutor(new FibonacciEfficient(), scale),
-                            logStreamWriter: sw);
+                        new Experiment(new FibonacciExecutor(new FibonacciEfficient(), scale));
                     experimentE.SetTimeout(60);
                     experimentE.Start();
                     while (experimentE.Now == Experiment.State.Running) {
@@ -44,8 +48,7 @@ namespace ComparativeExperiment {
                     Thread.Sleep(SleepGap);
                     Console.WriteLine($"Naive algorithm");
                     var experimentN =
-                        new Experiment(new FibonacciExecutor(new FibonacciNaive(), scale),
-                            logStreamWriter: sw);
+                        new Experiment(new FibonacciExecutor(new FibonacciNaive(), scale));
                     experimentN.SetTimeout(60);
                     experimentN.Start();
                     while (experimentN.Now == Experiment.State.Running) {
