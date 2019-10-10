@@ -164,11 +164,11 @@ int main()
 
         printf("Problem Size:%d\n",LEN);
 
-        printf("StdSort: \t\t");
-        memcpy(a,ab,sizeof(UInt32) * LEN);
-        RunInTimeout(RunStdSort);
-        if(*IsTimeoutP) printf("Timeout");
-        printf("\n");
+//        printf("StdSort: \t\t");
+//        memcpy(a,ab,sizeof(UInt32) * LEN);
+//        RunInTimeout(RunStdSort);
+//        if(*IsTimeoutP) printf("Timeout");
+//        printf("\n");
 
 //        printf("InsertionSort: \t");
 //        memcpy(a,ab,sizeof(UInt32) * LEN);
@@ -176,23 +176,23 @@ int main()
 //        if(*IsTimeoutP) printf("Timeout");
 //        printf("\n");
 
-        printf("ShellSort: \t\t");
-        memcpy(a,ab,sizeof(UInt32) * LEN);
-        RunInTimeout(RunShellSort);
-        if(*IsTimeoutP) printf("Timeout");
-        printf("\n");
-
-        printf("QuickSort: \t\t");
-        memcpy(a,ab,sizeof(UInt32) * LEN);
-        RunInTimeout(RunQuickSort);
-        if(*IsTimeoutP) printf("Timeout");
-        printf("\n");
-
-        printf("MergeSort: \t\t");
-        memcpy(a,ab,sizeof(UInt32) * LEN);
-        RunInTimeout(RunMergeSort);
-        if(*IsTimeoutP) printf("Timeout");
-        printf("\n");
+//        printf("ShellSort: \t\t");
+//        memcpy(a,ab,sizeof(UInt32) * LEN);
+//        RunInTimeout(RunShellSort);
+//        if(*IsTimeoutP) printf("Timeout");
+//        printf("\n");
+//
+//        printf("QuickSort: \t\t");
+//        memcpy(a,ab,sizeof(UInt32) * LEN);
+//        RunInTimeout(RunQuickSort);
+//        if(*IsTimeoutP) printf("Timeout");
+//        printf("\n");
+//
+//        printf("MergeSort: \t\t");
+//        memcpy(a,ab,sizeof(UInt32) * LEN);
+//        RunInTimeout(RunMergeSort);
+//        if(*IsTimeoutP) printf("Timeout");
+//        printf("\n");
 
         printf("RadixSort: \t\t");
         memcpy(a,ab,sizeof(UInt32) * LEN);
@@ -205,7 +205,7 @@ int main()
 
 
 
-
+//
 //
 //
 //int LEN = 100000000;
@@ -231,12 +231,13 @@ int main()
 //
 ////    std::sort(a,a+LEN);
 ////    insertionsort(a, LEN);
-//    shellsort(a,LEN);
+////    shellsort(a,LEN);
 ////    shellsortB2(a,LEN);
 ////    quicksort(a,LEN);
 ////    mergesort(a,LEN);
-////    radixsort(a,LEN,8);
+//    radixsort(a,LEN,8);
 ////    radixsortDiscard(a,LEN,8);
+////    radixsortDiscard2(a,LEN,8);
 //
 //    clock_t te = clock();
 //    stop = time(NULL);

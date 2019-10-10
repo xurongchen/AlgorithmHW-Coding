@@ -187,7 +187,7 @@ void radixsortDiscard(UInt32 *array, int len, int radixBit){
     }
 }
 
-void radixsort(UInt32 *array, int len, int radixBit){
+void radixsortDiscard2(UInt32 *array, int len, int radixBit){
     int bsize = 1 << radixBit;
     UInt32 mask = bsize - 1;
     AddNumInitSpace = len/bsize;
@@ -206,4 +206,22 @@ void radixsort(UInt32 *array, int len, int radixBit){
 void radixsort(UInt32 *array, int len){
     int Bit = 8;
     radixsort(array,len,Bit);
+}
+
+void radixsort(UInt32 *array, int len, int radixBit){
+    int bsize = 1 << radixBit;
+    UInt32 mask = bsize - 1;
+    int* C = new int[bsize]{0};
+    UInt32* B = new UInt32[len];
+    for(int mv = 0; mv<32; mv+=radixBit){
+        for(UInt32* ap=array,*as=array+len; ap<as; ++ap)  ++C[Show(*ap,mv,mask)];
+        for(int *cp=C+1,*ca=C,*cs=C+bsize; cp<cs; ca=cp,++cp) *cp = *cp + *ca;
+        for(UInt32* ap=array+len-1; ap>=array; --ap){
+            B[--C[Show(*ap,mv,mask)]] = *ap;
+        }
+        memcpy(array,B, sizeof(UInt32)*len);
+        memset(C,0, sizeof(UInt32)*bsize);
+    }
+    delete[] B;
+    delete[] C;
 }
