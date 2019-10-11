@@ -27,7 +27,7 @@ inline UInt32 RandUInt32(){
 pthread_t tid;
 void alarm_handler(int a)
 {
-    fprintf(stdout, "Enter alarm_handler...\n");
+    fprintf(stdout, "*\n");
     pthread_cancel(tid);    // terminate thread
 }
 
@@ -160,39 +160,38 @@ int main()
         }
 
         a = (UInt32*) malloc(sizeof(UInt32) * LEN);
-//        memcpy(a,ab,sizeof(UInt32) * LEN);
 
         printf("Problem Size:%d\n",LEN);
 
-//        printf("StdSort: \t\t");
-//        memcpy(a,ab,sizeof(UInt32) * LEN);
-//        RunInTimeout(RunStdSort);
-//        if(*IsTimeoutP) printf("Timeout");
-//        printf("\n");
+        printf("StdSort: \t\t");
+        memcpy(a,ab,sizeof(UInt32) * LEN);
+        RunInTimeout(RunStdSort);
+        if(*IsTimeoutP) printf("Timeout");
+        printf("\n");
 
-//        printf("InsertionSort: \t");
-//        memcpy(a,ab,sizeof(UInt32) * LEN);
-//        RunInTimeout(RunInsertionSort);
-//        if(*IsTimeoutP) printf("Timeout");
-//        printf("\n");
+        printf("InsertionSort: \t");
+        memcpy(a,ab,sizeof(UInt32) * LEN);
+        RunInTimeout(RunInsertionSort);
+        if(*IsTimeoutP) printf("Timeout");
+        printf("\n");
 
-//        printf("ShellSort: \t\t");
-//        memcpy(a,ab,sizeof(UInt32) * LEN);
-//        RunInTimeout(RunShellSort);
-//        if(*IsTimeoutP) printf("Timeout");
-//        printf("\n");
-//
-//        printf("QuickSort: \t\t");
-//        memcpy(a,ab,sizeof(UInt32) * LEN);
-//        RunInTimeout(RunQuickSort);
-//        if(*IsTimeoutP) printf("Timeout");
-//        printf("\n");
-//
-//        printf("MergeSort: \t\t");
-//        memcpy(a,ab,sizeof(UInt32) * LEN);
-//        RunInTimeout(RunMergeSort);
-//        if(*IsTimeoutP) printf("Timeout");
-//        printf("\n");
+        printf("ShellSort: \t\t");
+        memcpy(a,ab,sizeof(UInt32) * LEN);
+        RunInTimeout(RunShellSort);
+        if(*IsTimeoutP) printf("Timeout");
+        printf("\n");
+
+        printf("QuickSort: \t\t");
+        memcpy(a,ab,sizeof(UInt32) * LEN);
+        RunInTimeout(RunQuickSort);
+        if(*IsTimeoutP) printf("Timeout");
+        printf("\n");
+
+        printf("MergeSort: \t\t");
+        memcpy(a,ab,sizeof(UInt32) * LEN);
+        RunInTimeout(RunMergeSort);
+        if(*IsTimeoutP) printf("Timeout");
+        printf("\n");
 
         printf("RadixSort: \t\t");
         memcpy(a,ab,sizeof(UInt32) * LEN);
