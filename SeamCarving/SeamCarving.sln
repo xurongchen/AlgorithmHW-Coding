@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{F40B2583-0A49-43AC-8FD1-979974E208CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleDriver", "ConsoleDriver\ConsoleDriver.csproj", "{CE525A6E-50BF-4F69-BD7C-38BB0730D829}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F40B2583-0A49-43AC-8FD1-979974E208CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F40B2583-0A49-43AC-8FD1-979974E208CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F40B2583-0A49-43AC-8FD1-979974E208CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F40B2583-0A49-43AC-8FD1-979974E208CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE525A6E-50BF-4F69-BD7C-38BB0730D829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE525A6E-50BF-4F69-BD7C-38BB0730D829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE525A6E-50BF-4F69-BD7C-38BB0730D829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE525A6E-50BF-4F69-BD7C-38BB0730D829}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
