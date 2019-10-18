@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 
 namespace Core {
     public abstract class EnergyAnalyzer {
@@ -25,15 +26,15 @@ namespace Core {
                                 matrixBM.Data[r, c] = matrixB.Data[r, c];
                                 matrixGM.Data[r, c] = matrixG.Data[r, c];
                             }
-                            else if (c == removeList[r].Item2 - 1){
-                                matrixRM.Data[r, c] = (matrixR.Data[r, c] + matrixR.Data[r, c + 1]) / 2;
-                                matrixBM.Data[r, c] = (matrixB.Data[r, c] + matrixB.Data[r, c + 1]) / 2;
-                                matrixGM.Data[r, c] = (matrixG.Data[r, c] + matrixG.Data[r, c + 1]) / 2;
+                            else if (c == removeList[r].Item2 - 1) {
+                                matrixRM.Data[r, c] = (2 * matrixR.Data[r, c] + matrixR.Data[r, c + 1]) / 3;
+                                matrixBM.Data[r, c] = (2 * matrixB.Data[r, c] + matrixB.Data[r, c + 1]) / 3;
+                                matrixGM.Data[r, c] = (2 * matrixG.Data[r, c] + matrixG.Data[r, c + 1]) / 3;
                             }
                             else if (c == removeList[r].Item2){
-                                matrixRM.Data[r, c] = (matrixR.Data[r, c] + matrixR.Data[r, c + 1]) / 2;
-                                matrixBM.Data[r, c] = (matrixB.Data[r, c] + matrixB.Data[r, c + 1]) / 2;
-                                matrixGM.Data[r, c] = (matrixG.Data[r, c] + matrixG.Data[r, c + 1]) / 2;
+                                matrixRM.Data[r, c] = (matrixR.Data[r, c] + 2 * matrixR.Data[r, c + 1]) / 3;
+                                matrixBM.Data[r, c] = (matrixB.Data[r, c] + 2 * matrixB.Data[r, c + 1]) / 3;
+                                matrixGM.Data[r, c] = (matrixG.Data[r, c] + 2 * matrixG.Data[r, c + 1]) / 3;
                             }
                             else {
                                 matrixRM.Data[r, c] = matrixR.Data[r, c + 1];
@@ -65,14 +66,14 @@ namespace Core {
                                 matrixGM.Data[r, c] = matrixG.Data[r, c];
                             }
                             else if (r == removeList[c].Item1 - 1){
-                                matrixRM.Data[r, c] = (matrixR.Data[r + 1, c] + matrixR.Data[r, c]) / 2;
-                                matrixBM.Data[r, c] = (matrixB.Data[r + 1, c] + matrixB.Data[r, c]) / 2;
-                                matrixGM.Data[r, c] = (matrixG.Data[r + 1, c] + matrixG.Data[r, c]) / 2;
+                                matrixRM.Data[r, c] = (matrixR.Data[r + 1, c] + 2 * matrixR.Data[r, c]) / 3;
+                                matrixBM.Data[r, c] = (matrixB.Data[r + 1, c] + 2 * matrixB.Data[r, c]) / 3;
+                                matrixGM.Data[r, c] = (matrixG.Data[r + 1, c] + 2 * matrixG.Data[r, c]) / 3;
                             }
                             else if (r == removeList[c].Item1){
-                                matrixRM.Data[r, c] = (matrixR.Data[r + 1, c] + matrixR.Data[r, c]) / 2;
-                                matrixBM.Data[r, c] = (matrixB.Data[r + 1, c] + matrixB.Data[r, c]) / 2;
-                                matrixGM.Data[r, c] = (matrixG.Data[r + 1, c] + matrixG.Data[r, c]) / 2;
+                                matrixRM.Data[r, c] = (2 * matrixR.Data[r + 1, c] + matrixR.Data[r, c]) / 3;
+                                matrixBM.Data[r, c] = (2 * matrixB.Data[r + 1, c] + matrixB.Data[r, c]) / 3;
+                                matrixGM.Data[r, c] = (2 * matrixG.Data[r + 1, c] + matrixG.Data[r, c]) / 3;
                             }
                             else {
                                 matrixRM.Data[r, c] = matrixR.Data[r + 1, c];
@@ -173,11 +174,54 @@ namespace Core {
         private MatrixInt32 AnalyzeResult;
         public override void Analyze() {
             var matrixSum = matrixR + matrixB + matrixG;
-            AnalyzeResult =
-                MatrixInt32.Abs(matrixSum.Convolution(ConvolutionCore, 
-                    MatrixInt32.ConvolutionChoice.Same_EdgeCopy))
-                + MatrixInt32.Abs(matrixSum.Convolution(ConvolutionCore.T,
-                    MatrixInt32.ConvolutionChoice.Same_EdgeCopy));
+            MatrixInt32 result_tR = null,
+                result_tRT = null,
+                result_tB = null,
+                result_tBT = null,
+                result_tG = null,
+                result_tGT = null;
+            
+            Thread tR = new Thread( () =>  result_tR = MatrixInt32.Abs(matrixR.Convolution(ConvolutionCore, 
+                MatrixInt32.ConvolutionChoice.Same_FillZero)));
+            Thread tRT = new Thread( () =>  result_tRT = MatrixInt32.Abs(matrixR.Convolution(ConvolutionCore.T,
+                MatrixInt32.ConvolutionChoice.Same_FillZero)));
+            Thread tB = new Thread( () =>  result_tB = MatrixInt32.Abs(matrixR.Convolution(ConvolutionCore, 
+                MatrixInt32.ConvolutionChoice.Same_FillZero)));
+            Thread tBT = new Thread( () =>  result_tBT = MatrixInt32.Abs(matrixR.Convolution(ConvolutionCore.T,
+                MatrixInt32.ConvolutionChoice.Same_FillZero)));
+            Thread tG = new Thread( () =>  result_tG = MatrixInt32.Abs(matrixR.Convolution(ConvolutionCore, 
+                MatrixInt32.ConvolutionChoice.Same_FillZero)));
+            Thread tGT = new Thread( () =>  result_tGT = MatrixInt32.Abs(matrixR.Convolution(ConvolutionCore.T,
+                MatrixInt32.ConvolutionChoice.Same_FillZero)));
+            tR.Start();
+            tG.Start();
+            tB.Start();
+            tRT.Start();
+            tGT.Start();
+            tBT.Start();
+            
+            tR.Join();
+            tG.Join();
+            tB.Join();
+            tRT.Join();
+            tGT.Join();
+            tBT.Join();
+            MatrixInt32 sumR = null, sumB = null, sumG = null;
+            Thread sR = new Thread(() => sumR = result_tR + result_tRT);
+            Thread sB = new Thread(() => sumB = result_tB + result_tBT);
+            Thread sG = new Thread(() => sumG = result_tG + result_tGT);
+            sR.Start();
+            sB.Start();
+            sG.Start();
+            sB.Join();
+            sR.Join();
+            sG.Join();
+            AnalyzeResult = sumR + sumB + sumG;
+//            AnalyzeResult =
+//                MatrixInt32.Abs(matrixSum.Convolution(ConvolutionCore, 
+//                    MatrixInt32.ConvolutionChoice.Same_FillZero))
+//                + MatrixInt32.Abs(matrixSum.Convolution(ConvolutionCore.T,
+//                    MatrixInt32.ConvolutionChoice.Same_FillZero));
         }
 
         public override double GetEnergy(int px, int py) => AnalyzeResult.Data[px, py];
