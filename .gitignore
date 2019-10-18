@@ -4,6 +4,11 @@
 **/packages/
 **/.DS_Store
 
+**/*.o
+**/*.out
+**/cmake-build-debug/
+**/cmake-build-release/
+
 #cpop
 cpop/PointSet.txt
 cpop/Solution.txt
