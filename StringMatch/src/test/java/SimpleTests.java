@@ -5,7 +5,7 @@ import java.util.ListIterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Tests {
+public class SimpleTests {
 
     @Test
     public void test1() {
