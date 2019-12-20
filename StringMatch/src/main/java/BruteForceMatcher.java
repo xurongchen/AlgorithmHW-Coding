@@ -7,15 +7,18 @@ public class BruteForceMatcher implements Matcher {
 
     public LinkedList<Integer> Match(String T, String P) {
         LinkedList<Integer> result = new LinkedList<Integer>();
-        int imax = T.length() - P.length();
+        char PA[] = P.toCharArray();
+//        char TA[] = T.toCharArray();
+        int n = T.length(), m = P.length();
+        int imax = n - m;
         for (int i = 0; i < imax; ++i) {
             int j = 0;
-            for (; j < P.length(); ++j) {
-                if (T.charAt(i + j) != P.charAt(j)) {
+            for (; j < m; ++j) {
+                if (T.charAt(i + j) != PA[j]) {
                     break;
                 }
             }
-            if (j == P.length()) result.add(i);
+            if (j == m) result.add(i);
         }
         return result;
     }

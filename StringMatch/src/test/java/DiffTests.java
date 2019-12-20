@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -9,10 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DiffTests {
 
     @Test
-    public void test1() {
-        String T = Experiment.randomString(10000000);
-        String P = Experiment.randomString(100);
-        Matcher matcher = new BruteForceMatcher();
+    public void test1() throws IOException {
+//        String T = Experiment.randomString(10000000);
+        String T = Experiment.readString("/Users/xrc/Desktop/test.txt");
+//        String P = Experiment.randomString(300);
+        String P = Experiment.readString("/Users/xrc/Desktop/P.txt");
         HashMap<String, Object> ResultBM = new Experiment().run(new BmMatcher(),T,P);
         HashMap<String, Object> ResultBruteForce = new Experiment().run(new BruteForceMatcher(),T,P);
         HashMap<String, Object> ResultKMP = new Experiment().run(new KmpMatcher(),T,P);

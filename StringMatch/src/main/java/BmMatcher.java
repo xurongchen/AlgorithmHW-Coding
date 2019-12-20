@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 public class BmMatcher implements Matcher {
@@ -12,18 +10,19 @@ public class BmMatcher implements Matcher {
         int bmBcA[] = getbmBc(P);
         int bmGsA[] = getbmGs(P);
         char PA[] = P.toCharArray();
-        char TA[] = T.toCharArray();
+//        char TA[] = T.toCharArray();
 
         int n = T.length(), m = P.length();
         int j = 0;
         while (j <= n - m) {
             int i = m - 1;
-            for (; i >= 0 && PA[i] == TA[i + j]; --i) ;
+//            for (; i >= 0 && PA[i] == TA[i + j]; --i) ;
+            for (; i >= 0 && PA[i] == T.charAt(i+j); --i) ;
             if (i < 0) {
                 result.add(j);
                 i = 0;
             }
-            int v1=bmGsA[i], v2=bmBcA[TA[i + j]] - m + i + 1;
+            int v1=bmGsA[i], v2=bmBcA[T.charAt(i+j)] - m + i + 1;
             j += v1>v2? v1:v2;
         }
         return result;

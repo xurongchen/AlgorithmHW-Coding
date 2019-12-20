@@ -2,19 +2,22 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class KmpMatcher implements Matcher {
-    public static ArrayList<Integer> GetPi(String P) {
+    public static int[] GetPi(String P) {
         ArrayList<Integer> pi = new ArrayList<>(P.length());
+        int piA[] = new int[P.length()];
+        char PA[] = P.toCharArray();
+        piA[0] = -1;
         pi.add(-1);
-        int matchPos = -1;
-        for (int i = 1; i < P.length(); ++i) {
-            while (matchPos >= 0 && P.charAt(matchPos + 1) != P.charAt(i))
-                matchPos = pi.get(matchPos);
-            if (P.charAt(matchPos + 1) == P.charAt(i)) {
+        int matchPos = -1, m = P.length();
+        for (int i = 1; i < m; ++i) {
+            while (matchPos >= 0 && PA[matchPos + 1] != PA[i])
+                matchPos = piA[matchPos];
+            if (PA[matchPos + 1] == PA[i]) {
                 matchPos = matchPos + 1;
             }
-            pi.add(matchPos);
+            piA[i] = matchPos;
         }
-        return pi;
+        return piA;
     }
 
     public String Name() {
@@ -23,19 +26,20 @@ public class KmpMatcher implements Matcher {
 
     public LinkedList<Integer> Match(String T, String P) {
         LinkedList<Integer> result = new LinkedList<>();
-        ArrayList<Integer> pi = GetPi(P);
-        int matchPos = -1;
-        for (int i = 1; i < T.length(); ++i) {
-            while (matchPos >= 0 && P.charAt(matchPos + 1) != T.charAt(i))
-                matchPos = pi.get(matchPos);
+        int[] piA = GetPi(P);
+        char PA[] = P.toCharArray();
+        int matchPos = -1,m = P.length(),n=T.length();
+        for (int i = 1; i < n; ++i) {
+            while (matchPos >= 0 && PA[matchPos + 1] != T.charAt(i))
+                matchPos = piA[matchPos];
 
-            if (P.charAt(matchPos + 1) == T.charAt(i)) {
+            if (PA[matchPos + 1] == T.charAt(i)) {
                 matchPos = matchPos + 1;
             }
 
-            if (matchPos == P.length() - 1) {
+            if (matchPos == m - 1) {
                 result.add(i - matchPos);
-                matchPos = pi.get(matchPos);
+                matchPos = piA[matchPos];
             }
         }
         return result;

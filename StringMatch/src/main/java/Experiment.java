@@ -1,4 +1,9 @@
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -15,6 +20,10 @@ public class Experiment {
         }
         return sb.toString();
     }
+    public static String readString(String fileName) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(fileName)), StandardCharsets.US_ASCII);
+    }
+
     public HashMap<String, Object> run(Matcher matcher, String T, String P){
         long startTime = System.nanoTime();
         LinkedList<Integer> result = matcher.Match(T,P);
